@@ -18,6 +18,9 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
   setJson: json => {
+    // debug
+    // eslint-disable-next-line no-console
+    console.log('[useJson] setJson called, length:', (json || '').length);
     set({ json, loading: false });
     useGraph.getState().setGraph(json);
   },

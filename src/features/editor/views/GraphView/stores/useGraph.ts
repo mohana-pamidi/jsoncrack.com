@@ -50,7 +50,12 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
   setSelectedNode: nodeData => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
-    const { nodes, edges } = parser(data ?? useJson.getState().json);
+    const source = data ?? useJson.getState().json;
+    const { nodes, edges } = parser(source);
+
+    // debug
+    // eslint-disable-next-line no-console
+    console.log('[useGraph] setGraph called, nodes:', nodes.length);
 
     if (nodes.length > SUPPORTED_LIMIT) {
       return set({
